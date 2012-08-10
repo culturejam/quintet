@@ -5,14 +5,14 @@
  *
  * Licensed under Apache v2.0 http://www.apache.org/licenses/LICENSE-2.0.html
  *
- * jslint plusplus: true, sloppy: true, vars: true, white: true, maxerr: 10000 
+ * jslint plusplus: true, sloppy: true, vars: true, white: true, maxerr: 10000
  */
 
 //Hax0rz, this is not really a widget, it does not have create for example but uses init!!
 
 'use strict';
 
-quintet.widgets.form = 
+quintet.widgets.form =
 {
   id : "form",
 
@@ -22,7 +22,7 @@ quintet.widgets.form =
     var o =
     {
       name : "<New Form>",
-      columns : 2,
+      columns : 1,
       size : "medium", //bootstrap default
       id : this.id,
       ref : this.id
@@ -75,7 +75,7 @@ quintet.widgets.form =
     }
 
     if( quintet.builder )
-      quintet.builder.enableWidgetColumns( $(".killmenow").parent() );      
+      quintet.builder.enableWidgetColumns( $(".killmenow").parent() );
   },
 
   /* Take columns on the right that are no longer required if we reduced the column count of the form */
@@ -98,7 +98,7 @@ quintet.widgets.form =
   normalizeContentRow : function( queryResult , columnCount )
   {
     var columns = queryResult.find(".widgetColumn");
-    
+
     //Do we need more columns ?
     if( columnCount > columns.length )
       this.normalizeMissingColumns( queryResult , columnCount , columns );
@@ -152,7 +152,7 @@ quintet.widgets.form =
     var formOptions = form.find( "#formOptions" )[0].value
     var rows = form.find(".contentRow");
 
-    var o = { form : formOptions , name : JSON.parse( atob(formOptions) ).name , rows : [] }
+    var o = { form_options : atob(formOptions) , name : JSON.parse( atob(formOptions) ).name , rows : [] }
 
     var widgetColumns, i , section, col, widgets, data;
 
@@ -166,7 +166,7 @@ quintet.widgets.form =
         for( col = 0 ; col < widgetColumns.length ; col++ )
         {
           section.columns.push( { data : [] } );
-          widgetColumns.eq(col).find("#options").each( function( key ,value ){ section.columns[col].data.push( value.value ) } )
+          widgetColumns.eq(col).find("#options").each( function( key ,value ){ section.columns[col].data.push( atob(value.value) ) } )
         }
         o.rows.push( section );
       }
@@ -175,7 +175,7 @@ quintet.widgets.form =
         o.rows.push( { type : 'section' , data : rows.eq( i ).find( "#options" )[0].value } );
       }
     }
-    //console.log( o , JSON.stringify( o ) );
+    console.log( o , JSON.stringify( o ) );
     return JSON.stringify( o );
   },
 
@@ -185,7 +185,7 @@ quintet.widgets.form =
     //Lets have the same width as the right pane
     var width = $("#rightColumn").width() || 600;
     var w = window.open( 'testpopup.html' , 'name' , 'height=600,width='+width );
-  	if (window.focus) 
+  	if (window.focus)
       w.focus()
     return false;
   },
@@ -197,7 +197,7 @@ quintet.widgets.form =
     //Get back to the object
     data = JSON.parse( data );
     //Get the form info
-    form = JSON.parse( atob( data.form ) );
+    form = JSON.parse( data.form_options );
     //Set the title correctly of the window
     document.title = "Quintet [" + form.name + "]";
     //Apply options
@@ -227,9 +227,9 @@ quintet.widgets.form =
           //We need to count backwards.. so we use the little known negative offset feature of eq()
           e = $(".quintetForm").find(".widgetColumn").eq( j - form.columns );
           //Loop over all the widgets data, parse, instantiate and add
-          $.each( col.data , function( key, value ) 
+          $.each( col.data , function( key, value )
             {
-              widgetOptions = JSON.parse( atob( value ) );
+              widgetOptions = JSON.parse( value );
               e.append( quintet.widgets[widgetOptions.id].create( widgetOptions ) );
             }
           );
