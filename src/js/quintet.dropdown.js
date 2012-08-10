@@ -27,7 +27,7 @@ quintet.widgets.dropdown =
     o.choices = '';
     o.required = false;
     o.id = this.id;
-    o.ref = this.id + counter;
+    o.ref = $("."+this.id).length + counter;
     o.size = 1;
     return o;
   },
@@ -118,9 +118,9 @@ quintet.widgets.dropdown =
     //Rationalize size
     o.size = o.size * 1;
     if( isNaN( Math.floor( o.size ) ) )
-    	o.size = 7;
+    	o.size = 1;
     if( o.size < 1 || o.size > 15 ) //<- Arbitrary value, w00t !!
-    	o.size = 7;
+    	o.size = 1;
 
     o.data = quintet.widget.encodeOptions( o );
 
@@ -129,7 +129,7 @@ quintet.widgets.dropdown =
 
     return $( sprintf('<div id="%(ref)s">%(_closeButton)s' +
                         '<input type="hidden" id="options" name="options" value=\'%(data)s\'>' +
-                        '<div class="%(id)s widget">' +
+                        '<div class="%(id)ss widget">' +
                           '<label style="%(_style)s">%(_isRequired)s<span %(_labelColor)s >%(label)s</span></label>' +
                           '<select class="quintetDropdown" id="actual_%(ref)s" size="%(size)s">%(_items)s</select>' +
                           '<span class="formHint" %(_hintColor)s>%(hint)s</span>' +

@@ -175,7 +175,6 @@ quintet.widgets.form =
         o.rows.push( { type : 'section' , data : rows.eq( i ).find( "#options" )[0].value } );
       }
     }
-    console.log( o , JSON.stringify( o ) );
     return JSON.stringify( o );
   },
 
