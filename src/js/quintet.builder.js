@@ -5,14 +5,14 @@
  *
  * Licensed under Apache v2.0 http://www.apache.org/licenses/LICENSE-2.0.html
  *
- * jslint plusplus: true, sloppy: true, vars: true, white: true, maxerr: 10000 
+ * jslint plusplus: true, sloppy: true, vars: true, white: true, maxerr: 10000
  */
 
 //Hax0rz, this is not really a widget, it does not have create for example but uses init!!
 
 'use strict';
 
-quintet.builder = 
+quintet.builder =
 {
 
   /* See http://jqueryui.com/demos/sortable/#connect-lists */
@@ -61,11 +61,6 @@ quintet.builder =
     //Allow the right panel to receive elements
     this.enableWidgetColumns( $( ".widgetColumn" ) );
 
-    //Make the right hand accordion work
-    $(document).on('click' , '.btn.stretch90' , function(e){ $(".fieldCategory").collapse('hide')  } );
-    //And open the first of the accordion
-    $(".btn.stretch90").first().click();
-
     //Make all the form element close buttons work
     //The assumption is that elements are not nested
     //That the close button's parent has all elements that need removal
@@ -97,7 +92,7 @@ quintet.builder =
       {
         localStorage.testForm = quintet.widgets.form.serialize();
         quintet.widgets.form.popupTest();
-      } 
+      }
     );
 
   },
