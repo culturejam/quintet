@@ -1,7 +1,5 @@
 /*
- * quintet.pick.js : all logic pertaining to picklists
- * 'extends' : quintet.singletextfield
- * 'extends' : http://code.google.com/p/jquery-ui-picklist/
+ * quintet.pick.js : all logic pertaining to Multiple Choice widget
  *
  * Copyright 2012 konijn@gmail.com aka Tom Demuyt
  *
@@ -22,13 +20,11 @@ quintet.widgets.pick =
   {
     var counter = $("."+this.id).length + 1;
     var o = quintet.widgets.line.createOptions(); //<-- Lean on line
-    o.label = "List " + counter;
+    o.label = "Multiple Choice " + counter;
+    o.name = "multiple_choice_" + counter;
     o.hint = '';
-    o.chosen = '';
-    o.choices = '';
-    o.sourceLabel = 'Options';
-    o.targetLabel = 'Chosen';
-    o.size = 7;
+    o.value = 'First Choice';
+    o.choices = "First Choice\nSecond Choice\nThird Choice";
     o.required = false;
     o.id = this.id;
     o.ref = this.id + counter;
@@ -55,24 +51,11 @@ quintet.widgets.pick =
             .cell().label("default")
             .cell("paddedStretch").textInput("value", o.value)
           .row()
-            .cell().label("size")
-            .cell("paddedStretch").textInput("size", o.size)
-          .row()
-        .table()
-          .row()
-          .cell().label("sourceLabel")
-            .cell("paddedStretch").textInput("sourceLabel", o.sourceLabel)
-          .row()
-            .cell().label("targetLabel")
-            .cell("paddedStretch").textInput("targetLabel", o.targetLabel)
-          .row()
         .table("stretch")
           .row()
             .cell("paddedStretch").colspan(2).label("hint").textArea("hint", o.hint).stretch()
           .row()
             .cell("paddedStretch").colspan(2).label("choices").textArea("choices", o.choices).stretch()
-          .row()
-            .cell("paddedStretch").colspan(2).label("chosen").textArea("chosen", o.choices).stretch()
           .row()
         .table("stretch")
           .row("stretch")
@@ -123,21 +106,27 @@ quintet.widgets.pick =
     //use the style options of line
     quintet.widgets.line.styleOptions( o );
 
-    //Rationalize size
-    o.size = o.size * 1;
-    if( isNaN( Math.floor( o.size ) ) )
-    	o.size = 7;
-    if( o.size < 1 || o.size > 15 ) //<- Arbitrary value, w00t !!
-    	o.size = 7;
+    //options creation
+    var i, list;
+    list = o.choices.split("\n");
+    o._items = '';
+    for( i = 0 ; i < list.length ; i++ ){
+      var radio = {text: list[i], index: i, checked: o.value == list[i], name: o.name};
+    	o._items = o._items + sprintf('<label class="radio">' +
+                                    '<input type="radio" name="%(name)s" id="optionsRadios%(index)s" value="%(text)s">'+
+                                    '%(text)s'+
+                                    '</label>', radio);
+    }
 
     o.data = quintet.widget.encodeOptions( o );
+
 
     //Return the element
     return $( sprintf('<div id="%(ref)s">%(_closeButton)s' +
                         '<input type="hidden" id="options" name="options" value=\'%(data)s\'>' +
                         '<div class="%(id)s widget">' +
                           '<label style="%(_style)s">%(_isRequired)s<span %(_labelColor)s >%(label)s</span></label>' +
-                          '<select multiple="multiple" " id="actual_%(ref)s"></select>' +
+                          '<div id="actual_%(ref)s">%(_items)s</div>' +
                           '<span class="formHint" %(_hintColor)s>%(hint)s</span>' +
                         '</div>' +
                     '</div>' , o )
@@ -147,36 +136,6 @@ quintet.widgets.pick =
   //When cloning this, consider grepping for postCreate
   postCreate : function(o)
   {
-  	var i, list, choicesCount;
-  	//Set up the items
-    o._items = [];
-    //Loop over the choices to fill up _items
-    list = o.choices.split("\n");
-    choicesCount = list.length;
-    for( i = 0 ; i < list.length ; i++ )
-    	o._items.push( {  value : i /*list[i]*/ , label : list[i] , selected : false } );
-    //Now do the chosen items ( index starting from the count of possible choices )
-    list = o.chosen.split("\n");
-    for( i = 0 ; i < list.length ; i++ )
-    	o._items.push( {  value : choicesCount + i /*list[i]*/ , label : list[i] , selected : true } );
-
-    //Initialize the widget
-    $("#actual_"+o.ref).pickList
-    (
-      {
-        sourceListLabel : o.sourceLabel,
-        targetListLabel : o.targetLabel,
-        items           : o._items,
-        sortAttribute   : "value",
-      }
-    );
-
-    //Set the height
-    var itemHeight = $(".pickList_listItem").height();
-    if( itemHeight )
-    	$(".pickList_list").height( o.size * itemHeight )
-
-    //Stop dragging on the picklist itself
-    $(".pickList_list").mousedown(function(event) { event.stopImmediatePropagation(); } );
+    $('input[value="' + o.value + '"]').attr("checked", true);
   }
 };

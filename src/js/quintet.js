@@ -29,15 +29,15 @@ var quintet =
       var widget = this.widgets[key];
       //The create button has the id of the widget id
       $( "#" + widget.id )
-      .draggable( 
-        { 
-          connectToSortable: ".widgetColumn" , 
-          refreshPositions: true , 
-          helper : widget.create , 
-          start: function(e, ui) {  e.stopImmediatePropagation();  } , 
-          drag: function(e, ui) {  e.stopImmediatePropagation();  } 
-        } 
-      ); 
+      .draggable(
+        {
+          connectToSortable: ".widgetColumn" ,
+          refreshPositions: true ,
+          helper : widget.create ,
+          start: function(e, ui) {  e.stopImmediatePropagation();  } ,
+          drag: function(e, ui) {  e.stopImmediatePropagation();  }
+        }
+      );
     }
     //Enable the builder, if the builder is present
     if( quintet.builder )
@@ -50,7 +50,7 @@ var quintet =
   {
     o._style = o._style || "";
     if( value !== defaultValue )
-      { o._style = o._style + property + ":" + value + ";"; } 
+      { o._style = o._style + property + ":" + value + ";"; }
   },
 
   //TODO: move this to builder.js
@@ -75,7 +75,7 @@ var quintet =
     var previousWidget = quintet.widget.current;
     //Create the options, during this time, quintet.widget.current is set
     widget.createOptionsUI( 'settings' , src );
-    //If we are still are dealing with the same quintet.widget.current, 
+    //If we are still are dealing with the same quintet.widget.current,
     //then the user is probably trying to access the properties
     if( previousWidget == quintet.widget.current )
       $('#tabs a').eq( 1 ).tab( 'show' );
@@ -126,6 +126,8 @@ var quintet =
       if( o[attribute] !== undefined )
       {
         o[attribute] = newValue;
+        if(attribute == "label")
+          o.name = newValue.replace(/\s/g, "_").toLowerCase();
         var newWidget = widget.create( o );
         control.replaceWith( newWidget );
         if( widget.postCreate )
