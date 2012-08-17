@@ -129,7 +129,7 @@ quintet.widgets.dropdown =
 
     return $( sprintf('<div id="%(ref)s">%(_closeButton)s' +
                         '<input type="hidden" id="options" name="options" value=\'%(data)s\'>' +
-                        '<div class="%(id)ss widget">' +
+                        '<div class="%(id)s widget" style="position: static;">' +
                           '<label style="%(_style)s">%(_isRequired)s<span %(_labelColor)s >%(label)s</span></label>' +
                           '<select class="quintetDropdown" id="actual_%(ref)s" size="%(size)s">%(_items)s</select>' +
                           '<span class="formHint" %(_hintColor)s>%(hint)s</span>' +
