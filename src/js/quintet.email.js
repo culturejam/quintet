@@ -1,12 +1,12 @@
 /*
- * quintet.singletextfield.js : all logic pertaining to simple email address 
+ * quintet.singletextfield.js : all logic pertaining to simple email address
  * extends: quintet.singletextfield
  *
  * Copyright 2012 konijn@gmail.com aka Tom Demuyt
  *
  * Licensed under Apache v2.0 http://www.apache.org/licenses/LICENSE-2.0.html
  *
- * jslint plusplus: true, sloppy: true, vars: true, white: true, maxerr: 10000 
+ * jslint plusplus: true, sloppy: true, vars: true, white: true, maxerr: 10000
  *
  */
 
@@ -24,6 +24,7 @@ quintet.widgets.email =
     var o = quintet.widgets.line.createOptions(); //<-- Lean on line
     o.filter = 'email';
     o.label = "Email address " + counter;
+    o.name = o.label.replace(/\s/g, "_").toLowerCase();
     o.hint = '';
     o.required = false;
     o.id = this.id;
@@ -59,7 +60,7 @@ quintet.widgets.email =
                         '<input type="hidden" id="options" name="options" value=\'%(data)s\'>' +
                         '<div class="%(id)s widget">' +
                           '<label style="%(_style)s">%(_isRequired)s<span %(_labelColor)s >%(label)s</span></label>' +
-                          '<div class="input-prepend"><input type="text" class="textInput" %(_valueColor)s value="%(value)s"><span class="add-on">@</span></div>' +
+                          '<div class="input-prepend"><input name="form[%(name)s]" type="email" class="textInput" %(_valueColor)s value="%(value)s"><span class="add-on">@</span></div>' +
                           '<span class="formHint" %(_hintColor)s>%(hint)s</span>' +
                         '</div>' +
                     '</div>' , o )

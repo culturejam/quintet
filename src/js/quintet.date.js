@@ -6,7 +6,7 @@
  *
  * Licensed under Apache v2.0 http://www.apache.org/licenses/LICENSE-2.0.html
  *
- * jslint plusplus: true, sloppy: true, vars: true, white: true, maxerr: 10000 
+ * jslint plusplus: true, sloppy: true, vars: true, white: true, maxerr: 10000
  */
 
 'use strict';
@@ -22,6 +22,7 @@ quintet.widgets.date =
     var counter = $("."+this.id).length + 1;
     var o = quintet.widgets.line.createOptions(); //<-- Lean on line
     o.label = "Date " + ( counter==1 ? "" : ( " " + counter ) );
+    o.name = o.label.replace(/\s/g, "_").toLowerCase();
     o.hint = '';
     o.required = false;
     o.id = this.id;
@@ -59,7 +60,7 @@ quintet.widgets.date =
                         '<input type="hidden" id="options" name="options" value=\'%(data)s\'>' +
                         '<div class="%(id)s widget">' +
                           '<label style="%(_style)s">%(_isRequired)s<span %(_labelColor)s >%(label)s</span></label>' +
-                          '<input type="text" class="datepicker" />' +
+                          '<input name="form[%(name)s]" type="text" class="datepicker" />' +
                           '<span class="formHint" %(_hintColor)s>%(hint)s</span>' +
                         '</div>' +
                     '</div>' , o )

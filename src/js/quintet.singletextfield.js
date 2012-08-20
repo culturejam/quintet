@@ -35,6 +35,7 @@ quintet.widgets.line =
       id : this.id,
       ref : this.id + counter
     };
+    o.name = o.label.replace(/\s/g, "_").toLowerCase();
     return o;
   },
 
@@ -102,7 +103,7 @@ quintet.widgets.line =
       quintet.widget.current = o.ref;
   },
 
-  styleOptions : function( o ) 
+  styleOptions : function( o )
   {
     o._closeButton = quintet.mode.design ? '<a class="close" href="#">&times;</a>' : '';
     o._isRequired  = o.required ? '<em class="required">*</em>&nbsp;' : '';
@@ -143,7 +144,7 @@ quintet.widgets.line =
                         '<input type="hidden" id="options" name="options" value=\'%(data)s\'>' +
                         '<div class="%(id)s widget">' +
                           '<label style="%(_style)s">%(_isRequired)s<span %(_labelColor)s >%(label)s</span></label>' +
-                          '<input type="text" class="textInput" %(_valueColor)s value="%(value)s">' +
+                          '<input name="form[%(name)s]" type="text" class="textInput" %(_valueColor)s value="%(value)s">' +
                           '<span class="formHint" %(_hintColor)s>%(hint)s</span>' +
                         '</div>' +
                     '</div>' , o )

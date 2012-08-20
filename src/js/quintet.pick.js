@@ -22,6 +22,7 @@ quintet.widgets.pick =
     var o = quintet.widgets.line.createOptions(); //<-- Lean on line
     o.label = "Multiple Choice " + counter;
     o.name = "multiple_choice_" + counter;
+    o.name = o.label.replace(/\s/g, "_").toLowerCase();
     o.hint = '';
     o.value = 'First Choice';
     o.choices = "First Choice\nSecond Choice\nThird Choice";
@@ -113,7 +114,7 @@ quintet.widgets.pick =
     for( i = 0 ; i < list.length ; i++ ){
       var radio = {text: list[i], index: i, checked: o.value == list[i], name: o.name};
     	o._items = o._items + sprintf('<label class="radio">' +
-                                    '<input type="radio" name="%(name)s" id="optionsRadios%(index)s" value="%(text)s">'+
+                                    '<input type="radio" name="form[%(name)s]" id="optionsRadios%(index)s" value="%(text)s">'+
                                     '%(text)s'+
                                     '</label>', radio);
     }

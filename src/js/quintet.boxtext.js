@@ -6,7 +6,7 @@
  *
  * Licensed under Apache v2.0 http://www.apache.org/licenses/LICENSE-2.0.html
  *
- * jslint plusplus: true, sloppy: true, vars: true, white: true, maxerr: 10000 
+ * jslint plusplus: true, sloppy: true, vars: true, white: true, maxerr: 10000
  */
 
 'use strict';
@@ -22,10 +22,12 @@ quintet.widgets.box =
     var counter = $("."+this.id).length + 1;
     var o = quintet.widgets.line.createOptions(); //<-- Lean on line
     o.label = "Text " + counter;
+    o.name = o.label.replace(/\s/g, "_").toLowerCase();
     o.hint = '';
     o.required = false;
     o.id = this.id;
     o.ref = this.id + counter;
+    o.rows = "5";
     return o;
   },
 
@@ -57,7 +59,7 @@ quintet.widgets.box =
                         '<input type="hidden" id="options" name="options" value=\'%(data)s\'>' +
                         '<div class="%(id)s widget">' +
                           '<label style="%(_style)s">%(_isRequired)s<span %(_labelColor)s >%(label)s</span></label>' +
-                          '<textarea %(_valueColor)s rows="5" style="width:90%%">%(value)s</textarea>' +
+                          '<textarea %(_valueColor)s rows="%(rows)s" name="form[%(name)s]">%(value)s</textarea>' +
                           '<span class="formHint" %(_hintColor)s>%(hint)s</span>' +
                         '</div>' +
                     '</div>' , o )

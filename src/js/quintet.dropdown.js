@@ -23,6 +23,7 @@ quintet.widgets.dropdown =
     var o = quintet.widgets.line.createOptions(); //<-- Lean on line
     o.value = '';
     o.label = "Choice " + counter;
+    o.name = o.label.replace(/\s/g, "_").toLowerCase();
     o.hint = '';
     o.choices = '';
     o.required = false;
@@ -131,7 +132,7 @@ quintet.widgets.dropdown =
                         '<input type="hidden" id="options" name="options" value=\'%(data)s\'>' +
                         '<div class="%(id)s widget" style="position: static;">' +
                           '<label style="%(_style)s">%(_isRequired)s<span %(_labelColor)s >%(label)s</span></label>' +
-                          '<select class="quintetDropdown" id="actual_%(ref)s" size="%(size)s">%(_items)s</select>' +
+                          '<select name="form[%(name)s]" class="quintetDropdown" id="actual_%(ref)s" size="%(size)s">%(_items)s</select>' +
                           '<span class="formHint" %(_hintColor)s>%(hint)s</span>' +
                         '</div>' +
                     '</div>' , o )

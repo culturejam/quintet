@@ -22,6 +22,7 @@ quintet.widgets.name =
     var o = quintet.widgets.line.createOptions(); //<-- Lean on line
     o.filter = 'any';
     o.label = "Full name " + counter;
+    o.name = o.label.replace(/\s/g, "_").toLowerCase();
     o.hint = 'First name, Last name';
     o.required = false;
     o.id = this.id;
@@ -57,9 +58,9 @@ quintet.widgets.name =
                         '<input type="hidden" id="options" name="options" value=\'%(data)s\'>' +
                         '<div class="%(id)s widget">' +
                           '<label style="%(_style)s">%(_isRequired)s<span %(_labelColor)s >%(label)s</span></label>' +
-                          '<input type="text" class="textInput" %(_valueColor)s value="%(value)s" style="width: 105px;">' +
+                          '<input name="%(name)s1" type="text" class="textInput" %(_valueColor)s value="%(value)s" style="width: 105px;">' +
                           '&nbsp;&nbsp;' +
-                          '<input type="text" class="textInput" %(_valueColor)s value="%(value)s">' +
+                          '<input name="form[%(name)s]" type="text" class="textInput" %(_valueColor)s value="%(value)s">' +
                           '<span class="formHint" %(_hintColor)s>%(hint)s</span>' +
                         '</div>' +
                     '</div>' , o )

@@ -193,12 +193,11 @@ quintet.widgets.form =
   build : function ( data )
   {
     var i,j,e,col,row,form,widgetOptions;
+    $(".quintetForm .contentRow").remove();
     //Get back to the object
     data = JSON.parse( data );
     //Get the form info
     form = JSON.parse( data.form_options );
-    //Set the title correctly of the window
-    document.title = "Quintet [" + form.name + "]";
     //Apply options
     this.apply( form );
     //Parse all the rows
@@ -215,7 +214,7 @@ quintet.widgets.form =
         //Same as for section, most of this code was already in quintet.section.js
         //TODO some refactoring is clearly desirable here.
         //Add a set of new columns under the section
-        $(".quintetForm").append(  $('<tr class="contentRow"><td class="widgetColumn" style="vertical-align: top;"><div class="killmenow">&nbsp;</div></td></tr>') );
+        $(".quintetForm").append(  $('<tr class="contentRow"><td class="widgetColumn ui-sortable ui-droppable" style="width:49%;vertical-align: top;"><div class="killmenow">&nbsp;</div></td></tr>') );
         //And do some magic to get new columns
         quintet.widgets.form.reApply();
         //make sure the columns have a minimum height, we might drop this..
@@ -235,8 +234,6 @@ quintet.widgets.form =
         }
       }
     }
-    //Remove the close buttons
-    $(".close").remove();
   }
 
 };

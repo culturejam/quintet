@@ -1,12 +1,12 @@
 /*
- * quintet.singletextfield.js : all logic pertaining to simple email address 
+ * quintet.singletextfield.js : all logic pertaining to simple email address
  * extends: quintet.singletextfield
  *
  * Copyright 2012 konijn@gmail.com aka Tom Demuyt
  *
  * Licensed under Apache v2.0 http://www.apache.org/licenses/LICENSE-2.0.html
  *
- * jslint plusplus: true, sloppy: true, vars: true, white: true, maxerr: 10000 
+ * jslint plusplus: true, sloppy: true, vars: true, white: true, maxerr: 10000
  *
  */
 
@@ -23,6 +23,7 @@ quintet.widgets.checkbox =
     var counter = $("."+this.id).length + 1;
     var o = quintet.widgets.line.createOptions(); //<-- Lean on line
     o.label = "Option " + counter;
+    o.name = o.label.replace(/\s/g, "_").toLowerCase();
     o.hint = '';
     o.required = false;
     o.id = this.id;
@@ -64,7 +65,7 @@ quintet.widgets.checkbox =
                         '<input type="hidden" id="options" name="options" value=\'%(data)s\'>' +
                         '<div class="%(id)s widget">' +
                           '<label style="%(_style)s">%(_isRequired)s<span %(_labelColor)s >%(label)s</span></label>' +
-                          '<input type="checkbox" class="textInput" %(_valueColor)s %(_checked)s>' +
+                          '<input name="form[%(name)s]" type="checkbox" class="textInput" %(_valueColor)s %(_checked)s>' +
                           '<span class="formHint" %(_hintColor)s>%(hint)s</span>' +
                         '</div>' +
                     '</div>' , o )
